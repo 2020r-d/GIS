@@ -78,6 +78,25 @@ public class UserDao {
                 e.printStackTrace();
             }
     }
+    //注册默认权限等级为2
+    public void grantUser(User user) {
+        //获取数据库连接
+        Connection conn = DataBaseUtil.getConn();
+        //插入信息的sql语句
+        	String sql = "insert into user_role(uid, rid) values((select id from tb_user where username = ?),2)";
+            try {
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setString(1, user.getUsername());
+                System.out.println(user.getId());
+                //执行更新操作
+                System.out.println(sql);
+                ps.executeUpdate();
+                //释放资源
+                ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+    }
 
     /**
      * 注册成功后，用户既可通过注册的用户及密码进行登录，对于程序而言，此操作实质是根据

@@ -95,6 +95,7 @@ public class DriverDao {
 		Connection conn = DataBaseUtil.getConn();
 		//插入信息的sql语句
 		String sql = "insert into driver(driver_id,name,sex,birthday,validity_period,phone_number,email,creator) values(?,?,?,?,?,?,?,?)";
+		System.out.println("插入驾驶员信息的sql语句是："+sql);
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setObject(1, driver.getDriverId());

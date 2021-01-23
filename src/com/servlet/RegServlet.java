@@ -57,6 +57,7 @@ public class RegServlet extends HttpServlet {
 					user.setType("n");
 					if(userDao.userAvailable(username)){
 						userDao.saveUser(user);
+						userDao.grantUser(user);
 						req.setAttribute("info", "注册成功！ <br>");
 					}
 					else {
