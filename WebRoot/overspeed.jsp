@@ -32,7 +32,7 @@ xt/javascript"
 <link href="css/style.css" rel='stylesheet' type='text/css' />
 <script src="js/jquery-1.11.0.min.js"></script>
 <link
-	href='http://fonts.useso.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+	href='http://fonts.lug.ustc.edu.cn/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
 	rel='stylesheet' type='text/css'>
 <!---- start-smoth-scrolling---->
 <script type="text/javascript" src="js/move-top.js"></script>
@@ -205,12 +205,6 @@ xt/javascript"
 			</div>
 		</div>
 	</div>
-
-
-
-
-
-
 
 
 	<script src="js/TweenLite.min.js"></script>
