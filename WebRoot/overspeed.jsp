@@ -20,6 +20,7 @@ xt/javascript"
 	src="http://api.map.baidu.com/getscript?v=3.0&ak=awORzYNz3svIeWeQ9pGPLnmZletmqfog">
 </script>
 
+
 <script type="application/x-javascript">addEventListener("load", function() {
 		setTimeout(hideURLbar, 0);
 	}, false);

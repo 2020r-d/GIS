@@ -165,14 +165,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						style="display: flex;justify-content: space-around;flex-wrap: wrap; flex-direction: row;">
 
 						<div>
-								<select class="input_outer2" id="sel1" name="driverid"
-									class="box"><option>选择设备号</option>
+								<select class="input_outer2" id="sel1" name="engineid"
+									class="box"><option>选择发动机号</option>
 								</select>
 
 						</div>
 						<div>
-								<select class="input_outer2" id="sel" name="engineid"
-									class="box"><option>选择分配用户</option>
+								<select class="input_outer2" id="sel" name="driverid"
+									class="box"><option>选择驾驶证号</option>
 								</select>
 
 						</div>

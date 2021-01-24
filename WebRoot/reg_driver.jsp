@@ -220,7 +220,7 @@ xt/javascript"
 							<td class="td1">邮箱:</td>
 							<td class="td2">
 								<div class="input_outer2">
-									<input class="text1" onkeyup="emailvalidate()" type="text" name="email"
+									<input class="text1" onkeyup="emailvalidate()" type="text" name="email" id="email"
 										style="color: #FFFFFF !important" class="box"><span id="Email-attention"></span>
 								</div>
 							</td>
@@ -268,6 +268,7 @@ xt/javascript"
 	});
 </script>
 <script>
+	var emailflag = true;
 	function emailvalidate() {
 		var email = document.getElementById("email").value;
 		if (/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email)) {

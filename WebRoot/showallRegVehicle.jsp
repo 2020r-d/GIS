@@ -291,16 +291,7 @@ input.form-control {-webkit-text-fill-color: #555}
 							</div>
 						</div>
 
-						<div class="form-group">
-							<div class="col-sm-3">
-								<label class="control-label" for="add_driverid">驾驶证号</label>
-							</div>
-
-							<div class="col-sm-9">
-								<input type="text" name="driverid" class="form-control"
-									id="add_driverid">
-							</div>
-						</div>
+						
 						<input type="hidden" name="uid" class="form-control"
 									id="add_uid" value=<%=user.getId()%>>
 						<input type="hidden" name="uname" class="form-control"
