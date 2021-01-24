@@ -66,7 +66,8 @@ public class LoginInterceptor implements Filter{
 		noLoginValidateUrl.add("BcxServlet");
 		
 		noLoginValidateUrl.add("VerificationServlet");
-		noLoginValidateUrl.add("pdw_update.jsp");
+		noLoginValidateUrl.add("pwd_update.jsp");
+		noLoginValidateUrl.add("PasswordUpdate");
 		
 		noPriValidateUrl=new ArrayList<String>();
 		

@@ -634,7 +634,7 @@ input.form-control {-webkit-text-fill-color: #555}
 		});
 		document.getElementById("label").checked = false;
 	}
-	setTimeout("getRecord(); have_old = true;", 3000);
+	setTimeout("getRecord(); have_old = true;", 0);
 	setRemainTime();
 
 	function openWin(openjsp) {

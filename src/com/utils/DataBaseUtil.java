@@ -27,7 +27,7 @@ public class DataBaseUtil {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        String url = "jdbc:mysql://localhost:3306/xm14?user=XM14&password=123456&useUnicode=true&characterEncoding=UTF-8";
+        String url = "jdbc:mysql://localhost:3366/xm14?user=XM14&password=123456&useUnicode=true&characterEncoding=UTF-8";
         try {
             conn = DriverManager.getConnection(url);
             if (conn != null) {
