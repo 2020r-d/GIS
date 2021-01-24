@@ -256,6 +256,13 @@ var TableInit= function(){
                       	}
                       },
                   }, {
+                      field: 'login_time',
+                      title: '用户登录时间',
+                      align: 'left',
+                      halign:'center', //设置表头列居中对齐
+                      sortable:true
+                  }, 
+                  {
                       field: 'type',
                       title: '用户类型',
                       align: 'left',
@@ -268,7 +275,7 @@ var TableInit= function(){
                       	}
                       },
                       sortable:true
-                  }, {
+                  },{
                         field: 'username',
                         title: '操作',
                         width: 120,
@@ -314,7 +321,7 @@ var TableInit= function(){
         	//exportDataType: $(this).val(),//显示导出范围
             exportTypes: ['json','png', 'txt', 'excel'],//导出格式
             exportOptions: {//导出设置
-            				ignoreColumn: [0,6],
+            				ignoreColumn: [0,7],
                             fileName: 'TableUser',//下载文件名称
                             onMsoNumberFormat: DoOnMsoNumberFormat
             },

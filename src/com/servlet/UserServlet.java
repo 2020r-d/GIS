@@ -362,6 +362,10 @@ public class UserServlet extends BaseServlet {
 					map.put("question", rs.getString("question"));
 					map.put("email", rs.getString("email"));
 					map.put("type", rs.getString("type"));
+					String time = rs.getString("login_time");
+					if(time!=null)
+						time = time.substring(0,time.length()-2);
+					map.put("login_time", time);
 					jsonList.add(map);
 			}
 			statement.close();
