@@ -43,19 +43,30 @@ public class RecordServlet extends BaseServlet {
 	}protected void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-	}public void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	}
+	public void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Integer uId=Integer.parseInt(request.getParameter("uid"));
 		String userName = request.getParameter("username");
 		String show=request.getParameter("show");
 		List jsonList = new ArrayList();
 		int size=0;
+		//int flag = 0;
 		try{
 			String sql = "select * from bcx_data order by id DESC limit 25;";
 			Connection conn = DataBaseUtil.getConn();
 			PreparedStatement ps=conn.prepareStatement(sql);
-		
-			if(uId!=1){
+			/*
+			String rolesql = "select count(*) as count from user_role where rid = 1 and uid = ?";
+			PreparedStatement roleps=conn.prepareStatement(rolesql);
+			roleps.setInt(1, uId);
+			ResultSet rolers = roleps.executeQuery();
+			while (rolers.next()){
+				flag = rolers.getInt("count");
+			}
+			System.out.println("flag:"+flag);
+			*/
+			if(!isadmin(uId)){
 				sql = "select * from allocation where username=?";
 				ps= conn.prepareStatement(sql);
 				ps.setString(1, userName);
@@ -97,25 +108,50 @@ public class RecordServlet extends BaseServlet {
 			e1.printStackTrace();
 		}
 	// ���濪ʼ�������ص�json
-	JSONObject json = new JSONObject();
-	try {
-		json.put("aaData", jsonList);
-		json.put("total", jsonList.size());
-		json.put("result_msg", "ok"); // ���������������ó�"error"��
-		json.put("result_code", 0); // ����0��ʾ������������0�ͱ�ʾ�д���������������
+		JSONObject json = new JSONObject();
+		try {
+			json.put("aaData", jsonList);
+			json.put("total", jsonList.size());
+			json.put("result_msg", "ok"); // ���������������ó�"error"��
+			json.put("result_code", 0); // ����0��ʾ������������0�ͱ�ʾ�д���������������
 		// System.out.println("�����õ���json�ǣ�"+json.toString());
-		response.setContentType("application/json; charset=UTF-8");
-	} catch (JSONException e1) {
-		e1.printStackTrace();
-	}
-	try {
-		response.getWriter().print(json);
-		response.getWriter().flush();
-		response.getWriter().close();
-	} catch (IOException e) {
-		e.printStackTrace();
-	}
+			response.setContentType("application/json; charset=UTF-8");
+		} catch (JSONException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			response.getWriter().print(json);
+			response.getWriter().flush();
+			response.getWriter().close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
+	}
+	public boolean isadmin(int uId){
+		int flag = 0;
+		Connection conn = DataBaseUtil.getConn();
+		String rolesql = "select count(*) as count from user_role where rid = 1 and uid = ?";
+		PreparedStatement roleps;
+		try {
+			roleps = conn.prepareStatement(rolesql);
+			roleps.setInt(1, uId);
+			ResultSet rolers = roleps.executeQuery();
+			while (rolers.next()){
+				flag = rolers.getInt("count");
+			}
+			System.out.println("flag:"+flag);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(flag==1){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 }

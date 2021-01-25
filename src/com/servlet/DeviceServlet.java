@@ -405,7 +405,7 @@ public class DeviceServlet extends BaseServlet {
         JSONArray res=null;
 		try {
 			if(uId!=null){
-				if(uId==1){
+				if(isadmin(uId)){
 					res = dao.SelectAllDevice();
 				}
 				else{
@@ -437,7 +437,7 @@ public class DeviceServlet extends BaseServlet {
         DeviceDao dao = new DeviceDao();
         JSONArray res=null;
 		if(uId!=null){
-			if(uId==1){
+			if(isadmin(uId)){
 				res = dao.SelectAllUnregDevice();
 			}
 			else{
@@ -447,5 +447,31 @@ public class DeviceServlet extends BaseServlet {
 		System.out.println(res.toString());
 		PrintWriter out = response.getWriter();
 		out.println(res.toString());
+	}
+	
+	public boolean isadmin(int uId){
+		int flag = 0;
+		Connection conn = DataBaseUtil.getConn();
+		String rolesql = "select count(*) as count from user_role where rid = 1 and uid = ?";
+		PreparedStatement roleps;
+		try {
+			roleps = conn.prepareStatement(rolesql);
+			roleps.setInt(1, uId);
+			ResultSet rolers = roleps.executeQuery();
+			while (rolers.next()){
+				flag = rolers.getInt("count");
+			}
+			System.out.println("flag:"+flag);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(flag==1){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 }

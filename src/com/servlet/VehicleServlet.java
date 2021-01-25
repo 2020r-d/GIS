@@ -56,9 +56,10 @@ public class VehicleServlet extends BaseServlet {
         Integer uId=Integer.parseInt(req.getParameter("uid"));
         String uname = req.getParameter("uname");
         String driver_id = "";
-        if(uId!=1){
+        if(uId!=null){
+        if(!isadmin(uId)){
         	owner=uname;
-        }
+        }}
         System.out.println("获取车辆登记信息成功");
         //实例化RegVehicleDao对象
         RegVehicleDao vehicleDao = new RegVehicleDao();
@@ -252,6 +253,7 @@ public class VehicleServlet extends BaseServlet {
 		System.out.println("username:"+username);
 		List jsonList = new ArrayList();
 		int size=0;
+		int flag = 0;
 		try {
 			Connection conn = DataBaseUtil.getConn();
 			Statement statement = conn.createStatement();
@@ -259,8 +261,16 @@ public class VehicleServlet extends BaseServlet {
 			String sql="";
 			PreparedStatement preparedStatement=null;
 			
+			String rolesql = "select count(*) as count from user_role where rid = 1 and uid = ?";
+			PreparedStatement roleps=conn.prepareStatement(rolesql);
+			roleps.setInt(1, uId);
+			ResultSet rolers = roleps.executeQuery();
+			while (rolers.next()){
+				flag = rolers.getInt("count");
+			}
+			System.out.println("flag:"+flag);
 			
-			if(uId!=1){
+			if(flag!=1){
 				if(limit==null && offset==null){
 					sql="select * from (select * from reg_device where owner = ?) as a";
 					preparedStatement = conn.prepareStatement(sql);
@@ -553,6 +563,31 @@ public class VehicleServlet extends BaseServlet {
 			response.getWriter().close();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	public boolean isadmin(int uId){
+		int flag = 0;
+		Connection conn = DataBaseUtil.getConn();
+		String rolesql = "select count(*) as count from user_role where rid = 1 and uid = ?";
+		PreparedStatement roleps;
+		try {
+			roleps = conn.prepareStatement(rolesql);
+			roleps.setInt(1, uId);
+			ResultSet rolers = roleps.executeQuery();
+			while (rolers.next()){
+				flag = rolers.getInt("count");
+			}
+			System.out.println("flag:"+flag);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(flag==1){
+			return true;
+		}
+		else{
+			return false;
 		}
 	}
 
