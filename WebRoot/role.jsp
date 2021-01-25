@@ -190,14 +190,19 @@ input.form-control {-webkit-text-fill-color: #555}
 			</div>
 		</div>
 
-		<div id="toolbar" class="btn-group">
+		<div id="toolbar" class="btn-group" style="float:left">
 			<button id="btn_add" type="button" class="btn btn-default">
 				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
 			</button>
 		</div>
-		<div id="toolbar" class="btn-group">
+		<div id="toolbar" class="btn-group" style="float:left">
 			<button id="btn_print" type="button" class="btn btn-default">
 				<span class="glyphicon glyphicon-print" aria-hidden="true"></span>打印
+			</button>
+		</div>
+		<div id="toolbar" class="btn-group" style="float:left">
+			<button id="btn_sta" type="button" class="btn btn-default" style="float:"left">
+				<span class="glyphicon glyphicon-signal" aria-hidden="true"></span>统计图
 			</button>
 		</div>
 		<table id="tb_departments"></table>
@@ -400,7 +405,9 @@ var TableInit= function(){
       });
     };
     oTableInit.queryParams = function (params) {
-    	console.log(params)
+    	console.log(params);
+    	var userId='${sessionScope.user.id}';
+    	var userName='${sessionScope.user.username}';
         var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
             limit: params.limit,   //页面大小
             offset: params.offset,  //页码
@@ -408,6 +415,8 @@ var TableInit= function(){
         	ordername: params.sort,
             username: $("#txt_search_departmentname").val(),
             role: $("#txt_search_statu").val(),
+            uname:userName,
+            uid:userId
         };
         return temp;
     };
@@ -447,6 +456,10 @@ var ButtonInit = function () {
  		$("#btn_print").on("click",function (){
 				console.log("print");
 				printpage();
+		});
+		
+		$("#btn_sta").on("click",function (){
+				window.location.href='role_sta.jsp';
 		});
 		
 	// helper: 重置表单

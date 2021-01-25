@@ -33,20 +33,24 @@ public class VerificationServlet extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		response.setContentType("text/html;charset=utf-8");
 		request.setCharacterEncoding("utf-8");
-		
-		
+		String pwd = request.getParameter("pwd");
+		System.out.println("pwd"+pwd);
 		String e=request.getParameter("email");
 		//String e = "251946391@qq.com";
 		String v = "您的验证码是：";
 		EmailDao emaildao = new EmailDao();
 		String r= emaildao.randomCode();
-		System.out.println("发送的邮箱是："+ e);
-		System.out.println("随机生成的验证码是："+ r);
 		v += r;
 		emaildao.sendEmail(e, v);
-   
+		System.out.println("发送的邮箱是："+ e);
+		System.out.println("随机生成的验证码是："+ r);
 		HttpSession session =request.getSession();
         session.setAttribute("veri", r);
+        if(pwd!=null){
+			if(pwd.equals("pwd")){
+				session.setAttribute("pwdveri", r);
+			}
+		}
 	}
 
 	/**

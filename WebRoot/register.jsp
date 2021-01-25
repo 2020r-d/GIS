@@ -164,3 +164,20 @@ $(document).ready(function(){
 	});
 });
 </script>
+<script>
+    var time = 60;
+    $("#verification").on('click',function () {
+        $(this).attr("disabled",true);
+        //alert("234");
+            var timer = setInterval(function () {
+                if(time == 0){
+                    $("#btn_send").removeAttr("disabled");
+                    $("#btn_send").html("重新发送");
+                    clearInterval(timer);
+                }else {
+                    $("#btn_send").html(time);
+                    time--;
+                }
+            },1000);
+    });
+</script>

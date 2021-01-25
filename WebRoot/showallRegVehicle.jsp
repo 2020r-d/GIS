@@ -200,7 +200,12 @@ input.form-control {-webkit-text-fill-color: #555}
 				<span class="glyphicon glyphicon-print" aria-hidden="true"></span>打印
 			</button>
 		</div>
-		
+		<div id="toolbar" class="btn-group" style="float:left">
+			<button id="btn_sta" type="button" class="btn btn-default" style="float:"left">
+				<span class="glyphicon glyphicon-signal" aria-hidden="true"></span>统计图
+			</button>
+		</div>
+		<table id="tb_departments"></table>
 	</div>
 	<%
 		User user = (User) session.getAttribute("user");
@@ -517,7 +522,9 @@ var ButtonInit = function () {
 				console.log("print");
 				printpage();
 		});
- 		
+ 		$("#btn_sta").on("click",function (){
+				window.location.href='reg_sta.jsp';
+		});
 	// helper: 重置表单
 		function clearForm(form){
     		$(form)[0].reset();

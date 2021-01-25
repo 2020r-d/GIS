@@ -215,7 +215,7 @@ public class RoleServlet extends BaseServlet {
 		
 		//String tmp1=request.getParameter("limit");
 		//String tmp2=request.getParameter("offset");
-		String username=request.getParameter("username");
+		String username=request.getParameter("uname");
 		String role=request.getParameter("role");
 		String order=request.getParameter("order");
 		String ordername=request.getParameter("ordername");
@@ -409,5 +409,63 @@ public class RoleServlet extends BaseServlet {
 		// System.out.println("���ؽ��������ҳ���ˡ�");
 		
 	}
-
+	
+	public void sta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		Integer uId=Integer.parseInt(request.getParameter("uid"));
+		String username = request.getParameter("uname");
+		//String stanum = request.getParameter("stanum");
+		
+		System.out.println("uid:"+uId);
+		System.out.println("username:"+username);
+		List jsonList = new ArrayList();
+		int size=0;
+		int count = 0;
+		try {
+			Connection conn = DataBaseUtil.getConn();
+			Statement statement = conn.createStatement();
+			// ����sql��䣬���ݴ��ݹ����Ĳ�ѯ��������
+			String sql="";
+			PreparedStatement preparedStatement=null;
+			
+			sql="select role.name as name,count(*) as num from user_role,role where user_role.rid=role.id group by role.id,role.name;";
+			preparedStatement = conn.prepareStatement(sql);
+			//preparedStatement.setString(1, username);
+			//ResultSet tmprs = preparedStatement.executeQuery();
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			while (rs.next()) {
+					count = count + 1;
+					Map map = new HashMap();
+					map.put("index", count);
+					map.put("name", rs.getString("name"));
+					map.put("num", rs.getString("num"));
+					jsonList.add(map);
+			}
+			statement.close();
+			conn.close();
+		}
+		catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		JSONObject json = new JSONObject();
+		try {
+			json.put("data", jsonList);
+			json.put("total", count);
+			json.put("result_msg", "ok"); // ���������������ó�"error"��
+			json.put("result_code", 0); // ����0��ʾ������������0�ͱ�ʾ�д���������������
+			 System.out.println("-----------"+json.toString()+"------------");
+			response.setContentType("application/json; charset=UTF-8");
+		} catch (JSONException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			response.getWriter().print(json);
+			response.getWriter().flush();
+			response.getWriter().close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

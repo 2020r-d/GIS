@@ -30,6 +30,7 @@
 					<%
 						/*获取提示信息*/
 						String info = (String) request.getAttribute("info");
+						String flag = (String) request.getAttribute("flag");
 						if (info != null) {
 					%>
 					<h3><%=info%></h3>
@@ -38,34 +39,22 @@
 						}
 
 						/*获取用户的登录信息*/
-						User user = (User) session.getAttribute("user");
-						if (user != null) {
-							if (user.getUsername() != null) {
-								if (user.getPassword() != null) {
+						if (flag != null && flag.equals("1")) {
 					%>
 
 					<div class="mb2">
-						<h3><%=user.getUsername()%>
-							修改密码成功
-						</h3>
-						<h3>请重新登录！</h3>
 						<a href="login.jsp" class="act-but submit" style="color: #FFFFFF">返回登录界面</a>
 					</div>
 
 					<%
-						session.invalidate();
-								} else {
-									out.println("<div class='mb2'>");
-									out.println("<h3>两次密码输入不一致！</h3>");
-									out.println("<a href='login.jsp' class='act-but submit' style='color: #FFFFFF'>返回登录界面</a>");
-									out.println("</div>");
-								}
-							}
-						} else {
+						//session.invalidate();
+						}
+						else{
 							out.println("<div class='mb2'>");
-							out.println("<a href='login.jsp' class='act-but submit' style='color: #FFFFFF'>返回登录界面</a>");
+							out.println("<a href='pwd_update.jsp' class='act-but submit' style='color: #FFFFFF'>返回密码修改页面</a>");
 							out.println("</div>");
 						}
+							
 					%>
 				</div>
 			</div>

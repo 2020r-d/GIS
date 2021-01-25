@@ -33,49 +33,46 @@
 						
 						
 						<h1>修改密码</h1>
-						<table align="center" border="0" width="330">
-							<tr>
-								<td class="td3">用户名：</td>
-								<td class="td4">
-									<div class="input_outer2">
-										<input class="text1" type="text" name="username"
-											style="color: #FFFFFF !important" class="box">
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td class="td3">原密码：</td>
-								<td class="td4">
-									<div class="input_outer2">
-										<input class="text1" type="text" name="password"
-											style="color: #FFFFFF !important" class="box">
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td class="td3">新密码：</td>
-								<td class="td4">
-									<div class="input_outer2">
-										<input class="text1" type="text" name="new_pwd1"
-											style="color: #FFFFFF !important" class="box">
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td class="td3">确认新密码：</td>
-								<td class="td4">
-									<div class="input_outer2">
-										<input class="text1" type="text" name="new_pwd2"
-											style="color: #FFFFFF !important" class="box">
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="2" align="center" height="40"><input
-									type="submit" value="确认修改" class="act-but1 submit2" onclick="document:pswupdate.submit()"> <input
-									type="reset" value="重置" class="act-but1 submit2"></td>
-							</tr>
-						</table>
+							<!-- 用户名 -->
+						<div class="input_outer1">
+							<input name="username" class="text1"
+								style="color: #FFFFFF !important" type="text" placeholder="用户名">
+						</div>
+						<!-- 邮箱 -->
+						<div class="input_outer1">
+							<input name="email" class="text1" onkeyup="emailvalidate()"
+								id="email" style="color: #FFFFFF !important" type="text"
+								placeholder="邮箱"><span id="Email-attention"></span>
+						</div>
+						<button id="b01" type="button" style="background: pink;color: #fefefe">发送验证码</button>					
+						<!-- 验证码-->
+						<div class="input_outer1">
+							<input name="ver" class="text1"
+								id="verification" style="color: #FFFFFF !important" type="text"
+								placeholder="验证码"><span id="Verification-attention"></span>
+						</div>
+							<!-- 密码 -->
+						<div class="input_outer1">
+							<input name="password1" class="text1" id="pw1"
+								style="color: #FFFFFF !important" type="password"
+								placeholder="密码">
+						</div>
+						<!-- 确认密码 -->
+						<div class="input_outer1">
+							<input name="password2" class="text1" id="pw2"
+								style="color: #FFFFFF !important"
+								type="password" placeholder="确认密码"> <span
+								id="Password-attention"></span>
+							</p>
+						</div>
+						<span id="Submit-attention"></span>
+						<div class="mb2">
+							<a type="submit" href="javascript:;" class="act-but submit"
+								style="color: #FFFFFF" onclick="CheckSubmit();">修改密码</a>
+						</div>
+						<div class="mb2">
+							<input type="reset" value="重置" class="act-but submit">
+						</div> 
 					</form>
 				</div>
 			</div>
@@ -88,3 +85,63 @@
 	<script src="js/demo-1.js"></script>
 </body>
 </html>
+<script>
+	var emailflag = true;
+	
+	function emailvalidate() {
+		var email = document.getElementById("email").value;
+		if (/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email)) {
+			document.getElementById("Email-attention").innerHTML = "<font color='green'>correct</font>";
+			emailflag = true;
+		} else {
+			document.getElementById("Email-attention").innerHTML = "<font color='red'>incorrect</font>";
+			emailflag = false;
+		}
+	}
+
+	function CheckSubmit() {
+		if (emailflag) {
+			document.getElementById("Submit-attention").innerHTML = "<font color='green'>Correct information.</font>";
+			document:pswupdate.submit();
+		} else {
+			document.getElementById("Submit-attention").innerHTML = "<font color='red'>Please check your information.</font>";
+		}
+	}
+</script>
+
+<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>                                                                                                                           
+
+<script>
+$(document).ready(function(){
+	$("#b01").click(function(){
+		var email = $('#email').val();
+		var pwd = "pwd";
+		$.ajax({
+			type : "get",
+			url : "/XM14/VerificationServlet",
+			datatype : "json",
+			data:{
+				email:email,
+				pwd:pwd
+			},
+		})
+	});
+});
+</script>
+<script>
+    var time = 60;
+    $("#b01").on('click',function () {
+        $(this).attr("disabled",true);
+        //alert("234");
+            var timer = setInterval(function () {
+                if(time == 0){
+                    $("#b01").removeAttr("disabled");
+                    $("#b01").html("重新发送");
+                    clearInterval(timer);
+                }else {
+                    $("#b01").html(time);
+                    time--;
+                }
+            },1000);
+    });
+</script>

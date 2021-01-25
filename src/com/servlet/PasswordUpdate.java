@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.dao.UserDao;
 import com.model.User;
@@ -17,38 +18,65 @@ import com.model.User;
  */
 
 public class PasswordUpdate extends HttpServlet {
-    @Override
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=utf-8");
         req.setCharacterEncoding("utf-8");
 
         String username = req.getParameter("username");
-        String password = req.getParameter("password");
-        String new_pwd1 = req.getParameter("new_pwd1");
-        String new_pwd2 = req.getParameter("new_pwd2");
-        
+		String password = req.getParameter("password1");
+		String password2 = req.getParameter("password2");
+		String email = req.getParameter("email");
+		String v1 = req.getParameter("ver");
+		
+		HttpSession session =req.getSession();
+		String v2 = (String) session.getAttribute("pwdveri");
+		System.out.println("用户输入的验证码是："+ v1);
+		System.out.println("邮箱收到的验证码是："+ v2);
+		System.out.println("邮箱："+ email);
+		System.out.println("获取用户注册信息成功");
+		
         UserDao userDao = new UserDao();
-        //根据密码查询用户，并修改密码
-        User user  = userDao.pwdupdate(username, password, new_pwd1, new_pwd2);
-        //判断user是否为空
-        if (user != null) {
-            //将用户的对象放到session中
-            req.getSession().setAttribute("user", user);
-            //转发到result.jsp页面
-            req.getRequestDispatcher("updatemessage.jsp").forward(req, resp);
-            /**
-             response.sendRedirect(url)跳转到指定的URL地址，产生一个新的request，所以要传递参数只有在url后加参
-             数，如：
-             url?id=1.
-             request.getRequestDispatcher(url).forward(request,response)是直接将请求转发到指定URL，所以该请求
-             能够直接获得上一个请求的数据，也就是说采用请求转发，request对象始终存在，不会重新创建。而
-             sendRedirect()会新建request对象，所以上一个request中的数据会丢失。
-             */
-        }else {
-            //登录失败
-            req.setAttribute("info","用户名与密码不匹配！");
-            req.getRequestDispatcher("updatemessage.jsp").forward(req, resp);
-        }
+        if (username != "") {
+			if(password !=""){
+				if(password.equals(password2)){
+					if(v1 != null && v2 != null && v1.contentEquals(v2)){
+					//实例化一个User对象
+						//User user = new User();
+					//对用户对象的属性赋值
+						int total = userDao.pwdupdate(username, password,email);
+						if(total==1)
+						{req.setAttribute("info","修改成功！<br>");
+						req.setAttribute("flag","1");}
+						else{req.setAttribute("info","用户名和邮箱地址不匹配！<br>修改失败！<br>");
+						req.setAttribute("flag","0");}
+					}
+					else{
+						req.setAttribute("info","验证码错误！<br>修改失败！<br>");
+						req.setAttribute("flag","0");
+					}
+				}
+				else{
+					req.setAttribute("info","两次密码不一致！<br>修改失败！<br>");
+					req.setAttribute("flag","0");
+				}
+			}
+			else{
+				req.setAttribute("info", "密码为空！<br>修改失败！<br>");
+				req.setAttribute("flag","0");
+			}
+		}
+		else{
+			req.setAttribute("info", "用户名为空！<br>修改失败！<br>");
+			req.setAttribute("flag","0");
+		}
+        session.invalidate();
+        req.getRequestDispatcher("updatemessage.jsp").forward(req, resp);
     }
 
     @Override

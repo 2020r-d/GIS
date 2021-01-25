@@ -44,7 +44,8 @@ public class RegServlet extends HttpServlet {
 		UserDao userDao = new UserDao();
 		if (username != "") {
 			if(password !=""){
-				if(password.equals(password2) && v1.contentEquals(v2) && v1 != null && v2 != null){
+				if(password.equals(password2)){
+					if(v1 != null && v2 != null && v1.contentEquals(v2)){
 					//实例化一个User对象
 					User user = new User();
 					//对用户对象的属性赋值
@@ -62,6 +63,10 @@ public class RegServlet extends HttpServlet {
 					}
 					else {
 						req.setAttribute("info", "此用户已存在！<br>注册失败！<br>");
+					}
+					}
+					else{
+						req.setAttribute("info","验证码错误！<br>注册失败！<br>");
 					}
 				}
 				else{

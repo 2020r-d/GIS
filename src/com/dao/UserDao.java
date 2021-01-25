@@ -83,7 +83,7 @@ public class UserDao {
         //获取数据库连接
         Connection conn = DataBaseUtil.getConn();
         //插入信息的sql语句
-        	String sql = "insert into user_role(uid, rid) values((select id from tb_user where username = ?),2)";
+        	String sql = "insert into user_role(uid, rid,creat_by) values((select id from tb_user where username = ?),2,1)";
             try {
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setString(1, user.getUsername());
@@ -156,42 +156,30 @@ public class UserDao {
         return user;
     }
     
-    public User pwdupdate(String username, String password, String new_pwd1, String new_pwd2) {
+    public int pwdupdate(String username, String password,String email) {
         //实例化一个用户对象
-        User user =null;
+        //User user =null;
         Connection conn = DataBaseUtil.getConn();
-        String sql = "select * from tb_user where username = ? and password = ?";
-        String sql1= "update tb_user set password = ? where username = ?";
+        int success=0;
+        String sql1= "update tb_user set password = ? where username = ? and email= ?";
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            
             PreparedStatement ps1 = conn.prepareStatement(sql1);
-            ps.setString(1, username);
-            ps.setString(2, password);
-            ps1.setString(1, new_pwd1);
+            
+            //ps.setString(2, password);
+            ps1.setString(1, password);
             ps1.setString(2, username);
-            //执行查询获取结果集
-            ResultSet rs = ps.executeQuery();
-
-            //判断结果集是否有效,如果有效，则准备对密码进行修改
-            while (rs.next()) {
-                user = new User();
-                user.setUsername(rs.getString("username"));
-                //判断两次新密码是否一致
-                if(new_pwd1.equals(new_pwd2)){
-                	user.setPassword(rs.getString("password"));
-                	ps1.executeUpdate();
-                }
-            }
-            //释放资源
-            rs.close();
+            ps1.setString(3, email);
+            ps1.executeUpdate();
+            success = ps1.getUpdateCount();
+            System.out.println("success"+success);
             ps1.close();
-            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             DataBaseUtil.closeConn(conn);
         }
-        return user;
+        return success;
     }
     
     public boolean delete(String username){

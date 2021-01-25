@@ -415,4 +415,62 @@ public class UserServlet extends BaseServlet {
 		}
 	}
 	
+	public void sta(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		Integer uId=Integer.parseInt(request.getParameter("uid"));
+		String username = request.getParameter("uname");
+		//String stanum = request.getParameter("stanum");
+		
+		System.out.println("uid:"+uId);
+		System.out.println("username:"+username);
+		List jsonList = new ArrayList();
+		int size=0;
+		int count = 0;
+		try {
+			Connection conn = DataBaseUtil.getConn();
+			Statement statement = conn.createStatement();
+			// ����sql��䣬���ݴ��ݹ����Ĳ�ѯ��������
+			String sql="";
+			PreparedStatement preparedStatement=null;
+			
+			sql="select sex,count(*) as num from tb_user group by sex;";
+			preparedStatement = conn.prepareStatement(sql);
+			//preparedStatement.setString(1, username);
+			//ResultSet tmprs = preparedStatement.executeQuery();
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			while (rs.next()) {
+					count = count + 1;
+					Map map = new HashMap();
+					map.put("index", count);
+					map.put("sex", rs.getString("sex"));
+					map.put("num", rs.getString("num"));
+					jsonList.add(map);
+			}
+			statement.close();
+			conn.close();
+		}
+		catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		JSONObject json = new JSONObject();
+		try {
+			json.put("data", jsonList);
+			json.put("total", count);
+			json.put("result_msg", "ok"); // ���������������ó�"error"��
+			json.put("result_code", 0); // ����0��ʾ������������0�ͱ�ʾ�д���������������
+			 System.out.println("-----------"+json.toString()+"------------");
+			response.setContentType("application/json; charset=UTF-8");
+		} catch (JSONException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			response.getWriter().print(json);
+			response.getWriter().flush();
+			response.getWriter().close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

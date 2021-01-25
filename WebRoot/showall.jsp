@@ -189,9 +189,14 @@ input.form-control {-webkit-text-fill-color: #555}
 			</div>
 		</div>
 
-		<div id="toolbar" class="btn-group">
+		<div id="toolbar" class="btn-group" style="float:left">
 			<button id="btn_print" type="button" class="btn btn-default">
 				<span class="glyphicon glyphicon-print" aria-hidden="true"></span>打印
+			</button>
+		</div>
+		<div id="toolbar" class="btn-group" style="float:left">
+			<button id="btn_sta" type="button" class="btn btn-default" style="float:"left">
+				<span class="glyphicon glyphicon-signal" aria-hidden="true"></span>统计图
 			</button>
 		</div>
 		<table id="tb_departments"></table>
@@ -395,7 +400,9 @@ var ButtonInit = function () {
 			});
 			clearForm("#add_form_modal");// 清除表单上一次的输入数据	
 		});
- 
+ 		$("#btn_sta").on("click",function (){
+				window.location.href='user_sta.jsp';
+		});
 	// helper: 重置表单
 		function clearForm(form){
     		$(form)[0].reset();
