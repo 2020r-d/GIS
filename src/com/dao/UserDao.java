@@ -83,7 +83,7 @@ public class UserDao {
         //获取数据库连接
         Connection conn = DataBaseUtil.getConn();
         //插入信息的sql语句
-        	String sql = "insert into user_role(uid, rid,creat_by) values((select id from tb_user where username = ?),2,1)";
+        	String sql = "insert into user_role(uid, rid,create_by) values((select id from tb_user where username = ?),2,1)";
             try {
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setString(1, user.getUsername());

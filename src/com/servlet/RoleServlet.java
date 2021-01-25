@@ -215,7 +215,7 @@ public class RoleServlet extends BaseServlet {
 		
 		//String tmp1=request.getParameter("limit");
 		//String tmp2=request.getParameter("offset");
-		String username=request.getParameter("uname");
+		String username=request.getParameter("username");
 		String role=request.getParameter("role");
 		String order=request.getParameter("order");
 		String ordername=request.getParameter("ordername");

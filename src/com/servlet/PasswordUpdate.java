@@ -52,7 +52,8 @@ public class PasswordUpdate extends HttpServlet {
 						int total = userDao.pwdupdate(username, password,email);
 						if(total==1)
 						{req.setAttribute("info","修改成功！<br>");
-						req.setAttribute("flag","1");}
+						req.setAttribute("flag","1");
+						session.invalidate();}
 						else{req.setAttribute("info","用户名和邮箱地址不匹配！<br>修改失败！<br>");
 						req.setAttribute("flag","0");}
 					}
@@ -75,7 +76,7 @@ public class PasswordUpdate extends HttpServlet {
 			req.setAttribute("info", "用户名为空！<br>修改失败！<br>");
 			req.setAttribute("flag","0");
 		}
-        session.invalidate();
+        //
         req.getRequestDispatcher("updatemessage.jsp").forward(req, resp);
     }
 

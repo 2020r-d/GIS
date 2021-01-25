@@ -415,8 +415,7 @@ var TableInit= function(){
         	ordername: params.sort,
             username: $("#txt_search_departmentname").val(),
             role: $("#txt_search_statu").val(),
-            uname:userName,
-            uid:userId
+            
         };
         return temp;
     };

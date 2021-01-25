@@ -66,12 +66,12 @@
 							</p>
 						</div>
 						<span id="Submit-attention"></span>
-						<div class="mb2">
-							<a type="submit" href="javascript:;" class="act-but submit"
-								style="color: #FFFFFF" onclick="CheckSubmit();">修改密码</a>
+						<div class="mb2" style= "float:left">
+								<input type="submit"  value="修改密码" class="act-but1 submit2" 
+								style="color: #FFFFFF" onclick="CheckSubmit();">
 						</div>
-						<div class="mb2">
-							<input type="reset" value="重置" class="act-but submit">
+						<div class="mb2" style = "float:right">
+							<input type="reset" value="重置输入" class="act-but1 submit2">
 						</div> 
 					</form>
 				</div>
