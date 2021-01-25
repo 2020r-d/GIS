@@ -65,6 +65,8 @@ public class BcxServlet extends HttpServlet {
  		statement.executeUpdate(sql);
  		sql = "TRUNCATE TABLE allocation";
  		statement.executeUpdate(sql);
+ 		sql = "TRUNCATE TABLE reg_device";
+ 		statement.executeUpdate(sql);
  		//System.out.println("���bcx_data��");
  	}
 

@@ -30,7 +30,7 @@ public class DeviceDao {
 		// TODO Auto-generated method stub
 		JSONArray array = new JSONArray();
         Connection conn = DataBaseUtil.getConn();
-        String sql = "SELECT DISTINCT device_id,car_name FROM allocation WHERE username = ?";
+        String sql = "SELECT DISTINCT allocation.device_id,car_name FROM allocation,bcx_data WHERE allocation.device_id=bcx_data.device_id and username = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, username);

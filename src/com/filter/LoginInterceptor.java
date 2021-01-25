@@ -68,7 +68,7 @@ public class LoginInterceptor implements Filter{
 		noLoginValidateUrl.add("VerificationServlet");
 		noLoginValidateUrl.add("pwd_update.jsp");
 		noLoginValidateUrl.add("PasswordUpdate");
-		
+		noLoginValidateUrl.add("upvehmsg.jsp");
 		noPriValidateUrl=new ArrayList<String>();
 		
 		noPriValidateUrl.add("front.jsp");

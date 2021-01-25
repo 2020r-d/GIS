@@ -40,11 +40,11 @@
 						}
     					/*获取用户的登录信息*/
     					User user = (User) session.getAttribute("user");
-    					if (flag.equals("1")){
+    					if (flag!=null && flag.equals("1")){
 					%>
 								<div class="mb2">
 									<h3><%=user.getUsername()%>分配车辆成功！</h3>
-									<a href="front2.jsp" class="act-but submit" style="color: #FFFFFF" id="jump">返回主界面</a>
+									<a href="front.jsp" class="act-but submit" style="color: #FFFFFF" id="jump">返回主界面</a>
 								</div>
 					<%
 						//session.invalidate();
@@ -53,7 +53,7 @@
     						out.println("<div class='mb2'>");
     						out.println("<h3>对不起车辆没有分配成功！</h3>");
         					out.println("<a href='allocation_driver.jsp' class='act-but submit' style='color: #FFFFFF'>重新分配车辆</a>");
-        					out.println("<a href='front2.jsp'  class='act-but submit' style='color: #FFFFFF'>放弃分配车辆</a>");
+        					out.println("<a href='front.jsp'  class='act-but submit' style='color: #FFFFFF'>放弃分配车辆</a>");
         					out.println("</div>");
 						}
 						

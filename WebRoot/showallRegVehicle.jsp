@@ -190,18 +190,17 @@ input.form-control {-webkit-text-fill-color: #555}
 			</div>
 		</div>
 
-		<div id="toolbar" class="btn-group">
+		<div id="toolbar" class="btn-group" style="float:left">
 			<button id="btn_add" type="button" class="btn btn-default">
 				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
 			</button>
 		</div>
-		<div id="toolbar" class="btn-group">
-			<button id="btn_print" type="button" class="btn btn-default">
+		<div id="toolbar" class="btn-group" style="float:left">
+			<button id="btn_print" type="button" class="btn btn-default" style="float:"left">
 				<span class="glyphicon glyphicon-print" aria-hidden="true"></span>打印
 			</button>
 		</div>
 		
-		<table id="tb_departments"></table>
 	</div>
 	<%
 		User user = (User) session.getAttribute("user");
@@ -518,7 +517,7 @@ var ButtonInit = function () {
 				console.log("print");
 				printpage();
 		});
- 
+ 		
 	// helper: 重置表单
 		function clearForm(form){
     		$(form)[0].reset();

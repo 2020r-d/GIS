@@ -49,16 +49,26 @@ public class RecordServlet extends BaseServlet {
 		String userName = request.getParameter("username");
 		String show=request.getParameter("show");
 		List jsonList = new ArrayList();
-		
+		int size=0;
 		try{
 			String sql = "select * from bcx_data order by id DESC limit 25;";
 			Connection conn = DataBaseUtil.getConn();
 			PreparedStatement ps=conn.prepareStatement(sql);
 		
 			if(uId!=1){
-				sql = "select * from bcx_data natural join allocation where username=? order by id DESC limit 1;";
+				sql = "select * from allocation where username=?";
 				ps= conn.prepareStatement(sql);
 				ps.setString(1, userName);
+				ResultSet tmprs = ps.executeQuery();
+				while (tmprs.next()) {
+					size = size + 1;	
+				}
+				tmprs.close();
+				
+				sql = "select * from bcx_data natural join allocation where username=? order by id DESC limit ?;";
+				ps= conn.prepareStatement(sql);
+				ps.setString(1, userName);
+				ps.setInt(2, size);
 			}
 			ResultSet rs = ps.executeQuery();
 		

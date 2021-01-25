@@ -254,7 +254,7 @@ $(document).ready(function () {
             if(parsedJson!=null){ //后台传回来的select选项
                 for(var i=0;i<parsedJson.length;i++){
                     //遍历后台传回的结果，一项项往select中添加option
-                    unitObj.append("<option>"+parsedJson[i].name+"</option>");
+                    unitObj.append("<option>"+parsedJson[i].driver_id+"</option>");
                 }
             }
         },
